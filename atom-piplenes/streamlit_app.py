@@ -52,7 +52,7 @@ models = {
 # Page
 
 st.header("Data")
-st.write('Use provided dataset "weatherAUS.csv" or upload your own:')
+st.write('Use provided "weatherAUS.csv" or upload your own classification dataset:')
 waus = st. checkbox('weatherAUS')
 if waus:
     data = './data/weatherAUS.csv'
@@ -69,7 +69,7 @@ else:
 
 st.header("Results")
 
-if st.sidebar.button("Run"):
+if st.sidebar.button("Run models"):
     if not (encode or impute):
         st.sidebar.warning('Please select more cleaning steps')
     else:
@@ -78,6 +78,9 @@ if st.sidebar.button("Run"):
     
         # Initialize atom
         atom = ATOMClassifier(data, verbose=2, random_state=1)
+        # A bit of data cleaning
+        atom.clean()
+        placeholder.write("Cleaning the data...")
     
         if scale:
             placeholder.write("Scaling the data...")
